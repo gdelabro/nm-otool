@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 15:21:17 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/01/18 16:05:56 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/01/22 16:18:58 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void  ft_exit(int err, char *msg)
 {
+  (void)msg;
   if (err == 1)
     ft_printf("exit: malloc failed\n");
   else
@@ -36,6 +37,8 @@ int main(int ac, char **av)
     return (EXIT_FAILURE);
   ret = nm(ptr);
   if ((munmap(ptr, buf.st_size)))
+    return (EXIT_FAILURE);
+  if (close(fd) < 0)
     return (EXIT_FAILURE);
   return 1;
 }

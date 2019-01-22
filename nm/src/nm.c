@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:31:49 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/01/18 15:41:44 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/01/22 17:59:11 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@ int  nm(char *ptr)
   magic = *(int*)ptr;
   if (magic == MH_MAGIC_64)
     return (handle_64(ptr));
-  //else if (magic == MH_MAGIC)
-  //  ft_printf("file is a binary 32-bit.\n");
+  else if (magic == MH_MAGIC)
+    return (handle_32(ptr));
+  else if (magic == FAT_MAGIC)
+    return (handle_fat(ptr));
+  else
+    ft_printf("%x", magic,"ft_nm: The file was not recognized as a valid object file\n");
   return (0);
 }

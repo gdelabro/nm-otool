@@ -6,7 +6,7 @@
 #    By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/15 15:37:25 by gdelabro          #+#    #+#              #
-#    Updated: 2019/01/21 18:44:35 by gdelabro         ###   ########.fr        #
+#    Updated: 2019/01/22 18:00:21 by gdelabro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME_1 = ft_nm
 NAME_2 = ft_otool
 
 SRC_PATH_1 = nm/src
-SRC_NAME_1 = main.c handle_64.c nm.c print_symbols_64.c fill_sections_64.c\
+SRC_NAME_1 = main.c handle_64.c nm.c print_symbols.c fill_sections_64.c\
+										handle_32.c nm.c fill_sections_32.c fill_sections_fat.c\
+										handle_fat.c\
 
 SRC_PATH_2 = otool/src
 

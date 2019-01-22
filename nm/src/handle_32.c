@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_64.c                                        :+:      :+:    :+:   */
+/*   handle_32.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/01/22 16:04:08 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/01/22 16:08:46 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../nm.h"
 
-t_nlist   *creat_new_sym(struct nlist_64 el, char *str)
+t_nlist   *creat_new_sym_32(struct nlist el, char *str)
 {
   t_nlist *new_sym;
 
@@ -28,12 +28,12 @@ t_nlist   *creat_new_sym(struct nlist_64 el, char *str)
   return (new_sym);
 }
 
-t_nlist   *add_symbols(t_nlist *sym, struct nlist_64 el, char *str)
+t_nlist   *add_symbols_32(t_nlist *sym, struct nlist el, char *str)
 {
    t_nlist *new_sym;
    t_nlist *curr_sym;
 
-  new_sym = creat_new_sym(el, str);
+  new_sym = creat_new_sym_32(el, str);
   curr_sym = sym;
   if (!sym ||
     (ft_strcmp(str, sym->n_name) < 0 && (new_sym->next = sym) != (void*)-1))
@@ -56,11 +56,11 @@ t_nlist   *add_symbols(t_nlist *sym, struct nlist_64 el, char *str)
   return (sym);
 }
 
-t_nlist   *sort_symbols_64(int nsyms, int symoff, int stroff, char *ptr)
+t_nlist   *sort_symbols_32(int nsyms, int symoff, int stroff, char *ptr)
 {
   int               i;
   char              *str_table;
-  struct nlist_64   *el;
+  struct nlist      *el;
   t_nlist           *symbols;
 
   symbols = NULL;
@@ -70,25 +70,25 @@ t_nlist   *sort_symbols_64(int nsyms, int symoff, int stroff, char *ptr)
   while (++i < nsyms)
   {
     if (char_in_str(el[i].n_type, "\x001\x00e\x00f\0"))
-      symbols = add_symbols(symbols, el[i], str_table + el[i].n_un.n_strx);
+      symbols = add_symbols_32(symbols, el[i], str_table + el[i].n_un.n_strx);
   }
   return (symbols);
 }
 
-void  handle_64_part_2(t_nm_64 *s, char *ptr)
+void  handle_32_part_2(t_nm_32 *s, char *ptr)
 {
-  s->symbols = sort_symbols_64(s->sym->nsyms,
+  s->symbols = sort_symbols_32(s->sym->nsyms,
     s->sym->symoff, s->sym->stroff, ptr);
   print_symbols(s->symbols, s->sec);
 }
 
-int   handle_64(char *ptr)
+int   handle_32(char *ptr)
 {
-  t_nm_64      *s;
+  t_nm_32      *s;
 
   !(s = malloc(sizeof(t_nm_64))) ? ft_exit(1, "") : 0;
-  s->header = (struct mach_header_64 *)ptr;
-  s->lc = (void*)ptr + sizeof(struct mach_header_64);
+  s->header = (struct mach_header *)ptr;
+  s->lc = (void*)ptr + sizeof(struct mach_header);
   s->ncmds = s->header->ncmds;
   s->sym = NULL;
   s->sec = NULL;
@@ -98,9 +98,9 @@ int   handle_64(char *ptr)
     if (s->lc->cmd == LC_SYMTAB)
       s->sym = (struct symtab_command*)(s->lc);
     if (s->lc->cmd == LC_SEGMENT_64)
-      fill_sections_64(s);
+      fill_sections_32(s);
     s->lc = (void*)(s->lc) + s->lc->cmdsize;
   }
-  handle_64_part_2(s, ptr);
+  handle_32_part_2(s, ptr);
   return (1);
 }
