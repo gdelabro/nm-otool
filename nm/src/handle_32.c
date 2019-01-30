@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/01/22 16:08:46 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/01/29 16:26:56 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_nlist   *sort_symbols_32(int nsyms, int symoff, int stroff, char *ptr)
   i = -1;
   while (++i < nsyms)
   {
-    if (char_in_str(el[i].n_type, "\x001\x00e\x00f\0"))
+    if (!(el[i].n_type & N_STAB))
       symbols = add_symbols_32(symbols, el[i], str_table + el[i].n_un.n_strx);
   }
   return (symbols);
@@ -80,13 +80,14 @@ void  handle_32_part_2(t_nm_32 *s, char *ptr)
   s->symbols = sort_symbols_32(s->sym->nsyms,
     s->sym->symoff, s->sym->stroff, ptr);
   print_symbols(s->symbols, s->sec);
+  //ft_printf("its 32\n");
 }
 
 int   handle_32(char *ptr)
 {
   t_nm_32      *s;
 
-  !(s = malloc(sizeof(t_nm_64))) ? ft_exit(1, "") : 0;
+  !(s = malloc(sizeof(t_nm_fat))) ? ft_exit(1, "") : 0;
   s->header = (struct mach_header *)ptr;
   s->lc = (void*)ptr + sizeof(struct mach_header);
   s->ncmds = s->header->ncmds;
@@ -97,10 +98,11 @@ int   handle_32(char *ptr)
   {
     if (s->lc->cmd == LC_SYMTAB)
       s->sym = (struct symtab_command*)(s->lc);
-    if (s->lc->cmd == LC_SEGMENT_64)
+    if (s->lc->cmd == LC_SEGMENT)
       fill_sections_32(s);
     s->lc = (void*)(s->lc) + s->lc->cmdsize;
   }
   handle_32_part_2(s, ptr);
+  free_structs(s, s->symbols, s->sec);
   return (1);
 }

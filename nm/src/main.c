@@ -6,39 +6,76 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 15:21:17 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/01/22 16:18:58 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/01/25 19:53:51 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../nm.h"
 
+void  ft_abort_file(int err, char *msg)
+{
+  (void)msg;
+  if (err == 2)
+    ft_printf("%s: open failed or file does not exist\n", msg);
+  else if (err == 3)
+    ft_printf("exit: mmap failed\n");
+  else if (err == 4)
+    ft_printf("%s: fstat failed\n", msg);
+  else if (err == 5)
+    ft_printf("exit: munmap failed\n");
+  else if (err == 6)
+    ft_printf("exit: close failed\n");
+  else
+    ft_printf("exit: error unkonwn\n");
+}
+
 void  ft_exit(int err, char *msg)
 {
   (void)msg;
   if (err == 1)
-    ft_printf("exit: malloc failed\n");
+    ft_printf("exit: malloc failed: exiting\n");
+  else if (err == 2)
+    ft_printf("%s: exit: open failed or file does not exist\n", msg);
+  else if (err == 3)
+    ft_printf("%s: mmap failed: exiting\n", msg);
+  else if (err == 4)
+    ft_printf("%s: fstat failed: exiting\n", msg);
+  else if (err == 5)
+    ft_printf("%s: munmap failed: exiting\n", msg);
+  else if (err == 6)
+    ft_printf("%s: close failed: exiting\n", msg);
   else
-    ft_printf("exit: error unkonwn");
+    ft_printf("%s: error unkonwn: exiting\n", msg);
   exit(EXIT_FAILURE);
 }
 
-int main(int ac, char **av)
+void  nm_one_file(char *name, int aff_name)
 {
   int   fd;
   char  *ptr;
   int   ret;
   struct stat buf;
 
-  if ((fd = open(av[1], O_RDONLY)) < 0)
-    return (EXIT_FAILURE);
-  if (fstat(fd, &buf) < 0)
-    return(EXIT_FAILURE);
+  if ((fd = open(name, O_RDONLY)) < 0)
+    return (ft_abort_file(2, name));
+  if (fstat(fd, &buf) < 0 && close(fd) > 0)
+    ft_abort_file(4, name);
   if ((ptr = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
-    return (EXIT_FAILURE);
-  ret = nm(ptr);
+    ft_exit(3, "");
+  ret = nm(ptr, name, aff_name);
   if ((munmap(ptr, buf.st_size)))
-    return (EXIT_FAILURE);
+    ft_exit(5, "");
   if (close(fd) < 0)
-    return (EXIT_FAILURE);
-  return 1;
+    ft_exit(6, "");
+}
+
+int   main(int ac, char **av)
+{
+  int i;
+
+  i = 0;
+  if (ac == 1)
+    nm_one_file("a.out", 0);
+  while (++i < ac)
+    nm_one_file(av[i], ac > 2 ? 1 : 0);
 }

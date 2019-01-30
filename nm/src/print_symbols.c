@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 17:41:48 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/01/22 16:02:35 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/01/25 18:28:35 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char  define_type(t_nlist *sym, t_sections *sec)
     ret = 'Z';
   if ((sym->n_type & N_EXT) == 0 && ret != '?')
     ret += 32;
-  ret == '?' ? ft_printf("{red}") : 0;
   return (ret);
 }
 

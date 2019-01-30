@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/01/22 16:04:08 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/01/29 16:13:01 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_nlist   *sort_symbols_64(int nsyms, int symoff, int stroff, char *ptr)
   i = -1;
   while (++i < nsyms)
   {
-    if (char_in_str(el[i].n_type, "\x001\x00e\x00f\0"))
+    if (!(el[i].n_type & N_STAB))
       symbols = add_symbols(symbols, el[i], str_table + el[i].n_un.n_strx);
   }
   return (symbols);
@@ -80,6 +80,7 @@ void  handle_64_part_2(t_nm_64 *s, char *ptr)
   s->symbols = sort_symbols_64(s->sym->nsyms,
     s->sym->symoff, s->sym->stroff, ptr);
   print_symbols(s->symbols, s->sec);
+  //ft_printf("its 64\n");
 }
 
 int   handle_64(char *ptr)
