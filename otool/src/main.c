@@ -6,15 +6,14 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 15:21:17 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/04 20:10:04 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/04 20:12:39 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../nm.h"
+#include "../otool.h"
 
 void  ft_abort_file(int err, char *msg)
 {
-  (void)msg;
   if (err == 2)
     ft_printf("%s: open failed or file does not exist\n", msg);
   else if (err == 3)
@@ -31,7 +30,6 @@ void  ft_abort_file(int err, char *msg)
 
 void  ft_exit(int err, char *msg)
 {
-  (void)msg;
   if (err == 1)
     ft_printf("exit: malloc failed: exiting\n");
   else if (err == 2)
@@ -49,7 +47,7 @@ void  ft_exit(int err, char *msg)
   exit(EXIT_FAILURE);
 }
 
-void  nm_one_file(char *name, int aff_name)
+void  otool_one_file(char *name)
 {
   int   fd;
   char  *ptr;
@@ -61,12 +59,12 @@ void  nm_one_file(char *name, int aff_name)
   if (fstat(fd, &buf) < 0 && close(fd) > 0)
     ft_abort_file(4, name);
   if ((ptr = mmap(NULL, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
-    ft_exit(3, "");
-  ret = nm(ptr, name, aff_name);
+    ft_exit(3, name);
+  ret = otool(ptr, name);
   if ((munmap(ptr, buf.st_size)))
-    ft_exit(5, "");
+    ft_exit(5, name);
   if (close(fd) < 0)
-    ft_exit(6, "");
+    ft_exit(6, name);
 }
 
 int   main(int ac, char **av)
@@ -75,8 +73,7 @@ int   main(int ac, char **av)
 
   i = 0;
   if (ac == 1)
-    nm_one_file("a.out", 0);
+    ft_printf("usage: ./ft_otool <object file> ...\n");
   while (++i < ac)
-    nm_one_file(av[i], ac > 2 ? 1 : 0);
-  while (1);
+    otool_one_file(av[i]);
 }

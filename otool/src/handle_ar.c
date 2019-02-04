@@ -6,23 +6,32 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/04 20:09:47 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/04 20:14:59 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../nm.h"
+#include "../otool.h"
 
 void    print_ar(char *ptr, t_nm_ar *s, char *name)
 {
+  char    *name2;
   t_arch  *arch;
 
   arch = s->arch;
+  ft_printf("Archive : %s\n", name);
   while (arch)
   {
+    name2 = malloc(sizeof(char) * (ft_strlen(name) +
+      ft_strlen(arch->name) + 3));
+    name2[0] = 0;
+    ft_strcpy(name2, name);
+    ft_strcpy(name2 + ft_strlen(name2), "(");
+    ft_strcpy(name2 + ft_strlen(name2), arch->name);
+    ft_strcpy(name2 + ft_strlen(name2), ")");
     s->header = (struct ar_hdr*)(ptr + arch->off);
-    ft_printf("\n%s(%s):\n", name, arch->name);
-    nm((char*)((char*)(s->header + 1) +
-    ft_atoi(ft_strchr(s->header->ar_name, '/') + 1)) , name, 0);
+    otool((char*)((char*)(s->header + 1) +
+    ft_atoi(ft_strchr(s->header->ar_name, '/') + 1)) , name2);
+    free(name2);
     arch = arch->next;
   }
 }

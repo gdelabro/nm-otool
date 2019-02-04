@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/01/29 16:26:56 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/04 19:40:26 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,13 @@ void  handle_32_part_2(t_nm_32 *s, char *ptr)
   s->symbols = sort_symbols_32(s->sym->nsyms,
     s->sym->symoff, s->sym->stroff, ptr);
   print_symbols(s->symbols, s->sec);
-  //ft_printf("its 32\n");
 }
 
 int   handle_32(char *ptr)
 {
   t_nm_32      *s;
 
-  !(s = malloc(sizeof(t_nm_fat))) ? ft_exit(1, "") : 0;
+  !(s = malloc(sizeof(t_nm_32))) ? ft_exit(1, "") : 0;
   s->header = (struct mach_header *)ptr;
   s->lc = (void*)ptr + sizeof(struct mach_header);
   s->ncmds = s->header->ncmds;

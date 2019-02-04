@@ -6,7 +6,7 @@
 #    By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/15 15:37:25 by gdelabro          #+#    #+#              #
-#    Updated: 2019/01/29 18:37:03 by gdelabro         ###   ########.fr        #
+#    Updated: 2019/02/04 20:31:18 by gdelabro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,12 +15,14 @@ NAME_2 = ft_otool
 
 SRC_PATH_1 = nm/src
 SRC_NAME_1 = main.c handle_64.c nm.c print_symbols.c fill_sections_64.c\
-										handle_32.c nm.c fill_sections_32.c fill_sections_fat.c\
+										handle_32.c fill_sections_32.c\
 										handle_fat.c swap.c free_structs.c handle_ar.c\
 
 SRC_PATH_2 = otool/src
 
-SRC_NAME_2 = \
+SRC_NAME_2 = main.c handle_64.c otool.c print_sections.c handle_sections_64.c\
+										handle_32.c handle_sections_32.c\
+										handle_fat.c swap.c free_structs.c handle_ar.c\
 
 OBJ_PATH_1 = nm/obj
 OBJ_NAME_1 = $(SRC_NAME_1:.c=.o)
@@ -29,7 +31,7 @@ OBJ_PATH_2 = otool/obj
 OBJ_NAME_2 = $(SRC_NAME_2:.c=.o)
 
 CC = clang
-CFLAGS = #-Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 
 CPPFLAGS = -I nm/src -I otool/src -I includes -I ft_printf/includes
 
@@ -43,7 +45,7 @@ OBJ_1 = $(addprefix $(OBJ_PATH_1)/,$(OBJ_NAME_1))
 SRC_2 = $(addprefix $(SRC_PATH_2)/,$(SRC_NAME_2))
 OBJ_2 = $(addprefix $(OBJ_PATH_2)/,$(OBJ_NAME_2))
 
-all: $(LIB) $(NAME_1) #$(NAME_2)
+all: $(LIB) $(NAME_1) $(NAME_2)
 
 $(LIB):
 	@make -C libft

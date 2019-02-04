@@ -1,44 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fill_sections_fat.c                                :+:      :+:    :+:   */
+/*   handle_sections_32.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 18:43:25 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/01/22 17:29:13 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/04 20:31:02 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../nm.h"
+#include "../otool.h"
 
-t_sections *creat_new_section_fat(char sectname[16], int seg_num)
-{
-  t_sections  *new_sec;
-
-  new_sec = malloc(sizeof(*new_sec));
-  if (!new_sec)
-    ft_exit(1, "");
-  ft_bzero(new_sec->sectname, 16);
-  ft_strcpy(new_sec->sectname, sectname);
-  new_sec->seg_num = seg_num;
-  new_sec->next = NULL;
-  return (new_sec);
-}
-
-t_sections  *add_section_fat(t_nm_fat *s, struct section *sec, struct segment_command *seg)
-{
-  t_sections *new_sec;
-  int         i;
-
-  i = s->sec ? s->sec->seg_num + 1 : 1;
-  new_sec = creat_new_section_fat(sec->sectname, i);
-  new_sec->next = s->sec;
-  s->sec = new_sec;
-  return (s->sec);
-}
-
-void   fill_sections_fat(t_nm_fat *s)
+void   handle_sections_32(t_nm_32 *s, char *ptr, char *name)
 {
   struct segment_command *seg;
 	struct section			*sec;
@@ -47,9 +21,11 @@ void   fill_sections_fat(t_nm_fat *s)
   i = -1;
   seg = (struct segment_command*)(s->lc);
   sec = (void*)(seg + 1);
-  while (++i < seg->nsects)
+  while (++i < (int)seg->nsects)
   {
-    s->sec = add_section_fat(s, sec, seg);
+    if(!ft_strcmp(sec->segname, SEG_TEXT) &&
+      !ft_strcmp(sec->sectname, SECT_TEXT))
+      print_sections(ptr + sec->offset, sec->size, name, (void*)(uint64_t)sec->addr);
     sec += 1;
   }
 }

@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 18:43:25 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/01/22 16:00:41 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/04 20:28:32 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_sections *creat_new_section_32(char sectname[16], int seg_num)
   return (new_sec);
 }
 
-t_sections  *add_section_32(t_nm_32 *s, struct section *sec, struct segment_command *seg)
+t_sections  *add_section_32(t_nm_32 *s, struct section *sec)
 {
   t_sections *new_sec;
   int         i;
@@ -42,14 +42,14 @@ void   fill_sections_32(t_nm_32 *s)
 {
   struct segment_command *seg;
 	struct section			*sec;
-  int                   i;
+  uint32_t                   i;
 
   i = -1;
   seg = (struct segment_command*)(s->lc);
   sec = (void*)(seg + 1);
   while (++i < seg->nsects)
   {
-    s->sec = add_section_32(s, sec, seg);
+    s->sec = add_section_32(s, sec);
     sec += 1;
   }
 }
