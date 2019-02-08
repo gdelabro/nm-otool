@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 17:23:13 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/01/24 17:32:39 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/06 17:26:21 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ uint16_t	swap_uint16(uint16_t nb)
 	nb = (nb << 8) | (nb >> 8);
 	return (nb);
 }
+
 uint32_t	swap_uint32(uint32_t nb)
 {
 	nb = ((nb & 0x000000FF) << 24 |

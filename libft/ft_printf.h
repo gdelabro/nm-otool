@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdelabro <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/14 17:44:45 by gdelabro          #+#    #+#             */
-/*   Updated: 2017/05/17 14:18:19 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/06 18:28:45 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct			s_format
 }						t_format;
 
 int						ft_printf(const char *str, ...);
+int						ft_fd_printf(int fd, const char *str, ...);
 void					handle_int(t_pf *e, t_format *u, int nb);
 void					conv_s(t_format *u, t_pf *e, char *str);
 void					conv_b(t_pf *e, t_format *u);
