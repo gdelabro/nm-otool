@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/06 18:38:00 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/11 19:58:06 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,5 @@ int			handle_32(char *ptr)
 		s->lc = (void*)(s->lc) + s->lc->cmdsize;
 	}
 	handle_32_part_2(s, ptr);
-	free_structs(s, s->symbols, s->sec);
 	return (1);
 }
