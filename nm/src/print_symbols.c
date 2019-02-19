@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 17:41:48 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/06 17:19:16 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 20:06:05 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	print_symbols(t_nlist *sym, t_sections *sec)
 	tmp = sym;
 	while (tmp)
 	{
-		tmp->n_sect ? ft_printf("%.16llx %c %s\n", tmp->n_value,
+		(tmp->n_type & N_TYPE) != N_UNDF ?
+			ft_printf("%.16llx %c %s\n", tmp->n_value,
 				define_type(tmp, sec), tmp->n_name) :
 			ft_printf("% 16s %c %s\n", "",
 					define_type(tmp, sec), tmp->n_name);

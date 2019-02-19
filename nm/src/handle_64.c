@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 15:42:03 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 20:09:53 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ t_nlist		*add_symbols(t_nlist *sym, struct nlist_64 el, char *str)
 			curr_sym->next = new_sym;
 			return (sym);
 		}
-		if (ft_strcmp(str, curr_sym->next->n_name) < 0)
+		if (ft_strcmp(str, curr_sym->next->n_name) < 0 || (!ft_strcmp(str,
+			curr_sym->next->n_name) && el.n_value < curr_sym->next->n_value))
 		{
 			new_sym->next = curr_sym->next;
 			curr_sym->next = new_sym;
@@ -105,6 +106,7 @@ int			handle_64(char *ptr)
 			fill_sections_64(s);
 		s->lc = (void*)(s->lc) + s->lc->cmdsize;
 	}
+	!s->sym || !s->sec ? check_address(NULL) : 0;
 	handle_64_part_2(s, ptr);
 	return (1);
 }

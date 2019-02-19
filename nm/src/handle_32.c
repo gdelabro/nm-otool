@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 16:09:21 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 19:54:27 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int			handle_32(char *ptr)
 			fill_sections_32(s);
 		s->lc = (void*)(s->lc) + s->lc->cmdsize;
 	}
+	!s->sym || !s->sec ? check_address(NULL) : 0;
 	handle_32_part_2(s, ptr);
 	return (1);
 }

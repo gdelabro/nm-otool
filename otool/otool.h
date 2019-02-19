@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 14:53:45 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 16:18:16 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 18:59:05 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ void						handle_sections_64(t_nm_64 *s,
 void						handle_sections_32(t_nm_32 *s,
 		char *ptr, t_option *o);
 void						print_sections(char *ptr, uint32_t size,
-		void *addr);
+		void *addr, int mode);
 void						print_section_data(char *ptr, uint32_t size,
-		void *addr);
+		void *addr, int mode);
 void						print_archive_header(struct ar_hdr *header);
 void						print_arch(t_arch *arch, char *ptr);
 int							handle_64(char *ptr, char *name, t_option *o);

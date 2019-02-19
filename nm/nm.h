@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 14:53:45 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 16:18:02 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 18:59:42 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct				s_nm_fat
 	struct symtab_command	*sym;
 	t_nlist					*symbols;
 	t_sections				*sec;
+	void					*ptr;
 	uint32_t				i;
 }							t_nm_fat;
 

@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 17:41:48 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 16:51:12 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 18:42:10 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	print_archive_header(struct ar_hdr *h)
 	ft_putendl("");
 }
 
-void	print_section_data(char *ptr, uint32_t size, void *addr)
+void	print_section_data(char *ptr, uint32_t size, void *addr, int mode)
 {
 	int		i;
 
@@ -43,14 +43,15 @@ void	print_section_data(char *ptr, uint32_t size, void *addr)
 	ft_printf("Contents of (__DATA,__data) section\n");
 	while (++i < (int)size)
 	{
-		!(i % 16) ? ft_printf("%016llx\t", addr + i) : 0;
+		!(i % 16) && mode ? ft_printf("%016llx\t", addr + i) : 0;
+		!(i % 16) && !mode ? ft_printf("%08llx\t", addr + i) : 0;
 		ft_printf("%02x", *(unsigned char*)(ptr + i));
 		ft_printf(" ");
 		(i % 16) == 15 || i + 1 == (int)size ? ft_printf("\n") : 0;
 	}
 }
 
-void	print_sections(char *ptr, uint32_t size, void *addr)
+void	print_sections(char *ptr, uint32_t size, void *addr, int mode)
 {
 	int		i;
 
@@ -58,7 +59,8 @@ void	print_sections(char *ptr, uint32_t size, void *addr)
 	ft_printf("Contents of (__TEXT,__text) section\n");
 	while (++i < (int)size)
 	{
-		!(i % 16) ? ft_printf("%016llx\t", addr + i) : 0;
+		!(i % 16) && mode ? ft_printf("%016llx\t", addr + i) : 0;
+		!(i % 16) && !mode ? ft_printf("%08llx\t", addr + i) : 0;
 		ft_printf("%02x", *(unsigned char*)(ptr + i));
 		ft_printf(" ");
 		(i % 16) == 15 || i + 1 == (int)size ? ft_printf("\n") : 0;

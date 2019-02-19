@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 18:43:25 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 16:14:10 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 18:33:21 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ void	handle_sections_64(t_nm_64 *s, char *ptr, t_option *o)
 		check_address(sec);
 		if (!ft_strcmp(sec->segname, SEG_TEXT)
 				&& !ft_strcmp(sec->sectname, SECT_TEXT) && o->t)
-			print_sections(ptr + sec->offset, sec->size, (void*)sec->addr);
+			print_sections(ptr + sec->offset, sec->size,
+					(void*)sec->addr, 1);
 		if (!ft_strcmp(sec->segname, SEG_DATA)
 				&& !ft_strcmp(sec->sectname, SECT_DATA) && o->d)
-			print_section_data(ptr + sec->offset, sec->size, (void*)sec->addr);
+			print_section_data(ptr + sec->offset, sec->size,
+					(void*)sec->addr, 1);
 		sec += 1;
 	}
 }
