@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/06 17:24:34 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 15:47:22 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void		print_ar(char *ptr, t_nm_ar *s, char *name)
 	{
 		s->header = (struct ar_hdr*)(ptr + arch->off);
 		ft_printf("\n%s(%s):\n", name, arch->name);
-		nm((char*)((char*)(s->header + 1) +
-				ft_atoi(ft_strchr(s->header->ar_name, '/') + 1)), name, 0);
+		nm((char*)((char*)(s->header + 1)
+				+ ft_atoi(ft_strchr(s->header->ar_name, '/') + 1)), name, 0);
 		arch = arch->next;
 	}
 }
@@ -34,6 +34,7 @@ t_arch		*creat_file_member_arch(char *ptr, t_nm_ar *s, int i)
 	!(new_arch = malloc(sizeof(t_arch))) ? ft_exit(1, "") : 0;
 	s->header = (struct ar_hdr*)(ptr + s->ran[i].ran_off);
 	new_arch->off = s->ran[i].ran_off;
+	check_address(ptr + new_arch->off);
 	new_arch->strx = s->ran[i].ran_un.ran_strx;
 	new_arch->name = (char*)(s->header + 1);
 	new_arch->next = NULL;
@@ -90,11 +91,12 @@ int			handle_ar(char *ptr, char *name)
 
 	!(s = malloc(sizeof(t_nm_ar))) ? ft_exit(1, "") : 0;
 	s->header = (struct ar_hdr *)(ptr + SARMAG);
-	size = *(int*)((void*)(s->header + 1) +
-			ft_atoi(ft_strchr(s->header->ar_name, '/') + 1));
+	check_address(s->header);
+	size = *(int*)((void*)(s->header + 1)
+			+ ft_atoi(ft_strchr(s->header->ar_name, '/') + 1));
 	size /= sizeof(s->ran);
-	s->ran = (struct ranlib*)((void*)(s->header + 1) +
-			ft_atoi(ft_strchr(s->header->ar_name, '/') + 1) + 4);
+	s->ran = (struct ranlib*)((void*)(s->header + 1)
+			+ ft_atoi(ft_strchr(s->header->ar_name, '/') + 1) + 4);
 	s->arch = NULL;
 	i = -1;
 	while (++i < size)

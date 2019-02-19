@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 18:43:25 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/07 18:23:37 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 16:14:10 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ void	handle_sections_64(t_nm_64 *s, char *ptr, t_option *o)
 
 	i = -1;
 	seg = (struct segment_command_64*)(s->lc);
+	check_address(seg);
 	sec = (void*)(seg + 1);
 	while (++i < (int)seg->nsects)
 	{
-		if (!ft_strcmp(sec->segname, SEG_TEXT) &&
-				!ft_strcmp(sec->sectname, SECT_TEXT) && o->t)
+		check_address(sec);
+		if (!ft_strcmp(sec->segname, SEG_TEXT)
+				&& !ft_strcmp(sec->sectname, SECT_TEXT) && o->t)
 			print_sections(ptr + sec->offset, sec->size, (void*)sec->addr);
-		if (!ft_strcmp(sec->segname, SEG_DATA) &&
-				!ft_strcmp(sec->sectname, SECT_DATA) && o->d)
+		if (!ft_strcmp(sec->segname, SEG_DATA)
+				&& !ft_strcmp(sec->sectname, SECT_DATA) && o->d)
 			print_section_data(ptr + sec->offset, sec->size, (void*)sec->addr);
 		sec += 1;
 	}

@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/08 16:37:00 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 16:05:55 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ void		print_ar(char *ptr, t_nm_ar *s, char *name, t_option *o)
 	o->a ? print_arch(s->arch, ptr) : 0;
 	while (arch)
 	{
-		name2 = malloc(sizeof(char) * (ft_strlen(name) +
-					ft_strlen(arch->name) + 3));
+		name2 = malloc(sizeof(char) * (ft_strlen(name)
+					+ ft_strlen(arch->name) + 3));
 		name2[0] = 0;
 		ft_strcpy(name2, name);
 		ft_strcpy(name2 + ft_strlen(name2), "(");
 		ft_strcpy(name2 + ft_strlen(name2), arch->name);
 		ft_strcpy(name2 + ft_strlen(name2), ")");
 		s->header = (struct ar_hdr*)(ptr + arch->off);
-		otool((char*)((char*)(s->header + 1) +
-					ft_atoi(ft_strchr(s->header->ar_name, '/') + 1)), name2, o);
+		otool((char*)((char*)(s->header + 1)
+				+ ft_atoi(ft_strchr(s->header->ar_name, '/') + 1)), name2, o);
 		free(name2);
 		arch = arch->next;
 	}
@@ -43,6 +43,7 @@ t_arch		*creat_file_member_arch(char *ptr, t_nm_ar *s, int i, t_option *o)
 	(void)o;
 	!(new_arch = malloc(sizeof(t_arch))) ? ft_exit(1, "") : 0;
 	s->header = (struct ar_hdr*)(ptr + s->ran[i].ran_off);
+	check_address(s->header);
 	new_arch->off = s->ran[i].ran_off;
 	new_arch->strx = s->ran[i].ran_un.ran_strx;
 	new_arch->name = (char*)(s->header + 1);
@@ -101,12 +102,13 @@ int			handle_ar(char *ptr, char *name, t_option *o)
 	!(s = malloc(sizeof(t_nm_ar))) ? ft_exit(1, "") : 0;
 	ft_printf("Archive : %s\n", name);
 	s->header = (struct ar_hdr *)(ptr + SARMAG);
+	check_address(s->header);
 	o->a ? print_archive_header(s->header) : 0;
-	size = *(int*)((void*)(s->header + 1) +
-			ft_atoi(ft_strchr(s->header->ar_name, '/') + 1));
+	size = *(int*)((void*)(s->header + 1)
+			+ ft_atoi(ft_strchr(s->header->ar_name, '/') + 1));
 	size /= sizeof(s->ran);
-	s->ran = (struct ranlib*)((void*)(s->header + 1) +
-			ft_atoi(ft_strchr(s->header->ar_name, '/') + 1) + 4);
+	s->ran = (struct ranlib*)((void*)(s->header + 1)
+			+ ft_atoi(ft_strchr(s->header->ar_name, '/') + 1) + 4);
 	s->arch = NULL;
 	i = -1;
 	while (++i < size)

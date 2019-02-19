@@ -6,7 +6,7 @@
 #    By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/15 15:37:25 by gdelabro          #+#    #+#              #
-#    Updated: 2019/02/07 17:31:31 by gdelabro         ###   ########.fr        #
+#    Updated: 2019/02/19 15:51:18 by gdelabro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,14 @@ NAME_2 = ft_otool
 
 SRC_PATH_1 = nm/src
 SRC_NAME_1 = main.c handle_64.c nm.c print_symbols.c fill_sections_64.c\
-										handle_32.c fill_sections_32.c\
-										handle_fat.c swap.c free_structs.c handle_ar.c\
+			handle_32.c fill_sections_32.c check_address.c\
+			handle_fat.c swap.c free_structs.c handle_ar.c\
 
 SRC_PATH_2 = otool/src
 
 SRC_NAME_2 = main.c handle_64.c otool.c print_sections.c handle_sections_64.c\
-										handle_32.c handle_sections_32.c pars_option.c\
-										handle_fat.c swap.c free_structs.c handle_ar.c\
+			handle_32.c handle_sections_32.c pars_option.c check_address.c\
+			handle_fat.c swap.c free_structs.c handle_ar.c\
 
 OBJ_PATH_1 = nm/obj
 OBJ_NAME_1 = $(SRC_NAME_1:.c=.o)

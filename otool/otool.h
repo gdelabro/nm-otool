@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 14:53:45 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/08 19:07:32 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 16:18:16 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ typedef struct				s_nm_ar
 }							t_nm_ar;
 
 void						ft_exit(int err, char *msg);
+void						init_check_address(void *ptr, int size);
+void						check_address(void *ptr);
 void						handle_sections_64(t_nm_64 *s,
 		char *ptr, t_option *o);
 void						handle_sections_32(t_nm_32 *s,

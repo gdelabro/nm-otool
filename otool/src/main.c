@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 15:21:17 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/08 18:44:55 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 16:07:57 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	ft_exit(int err, char *msg)
 	else if (err == 8)
 		ft_fd_printf(2,
 "exiting: no object file\nUsage: ./ft_otool [-fdht] -- <object files> ...\n");
+	else if (err == 9)
+		ft_fd_printf(2, "file corrupted: exiting\n");
 	else
 		ft_fd_printf(2, "%s: error unkonwn: exiting\n", msg);
 	exit(EXIT_FAILURE);
@@ -59,7 +61,6 @@ void	otool_one_file(char *name, t_option *o)
 {
 	int				fd;
 	char			*ptr;
-	int				ret;
 	struct stat		buf;
 
 	if ((fd = open(name, O_RDONLY)) < 0)
@@ -71,7 +72,8 @@ void	otool_one_file(char *name, t_option *o)
 	if ((ptr = mmap(NULL, buf.st_size,
 					PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
 		ft_exit(3, name);
-	ret = otool(ptr, name, o);
+	init_check_address(ptr, buf.st_size);
+	otool(ptr, name, o);
 	if ((munmap(ptr, buf.st_size)))
 		ft_exit(5, name);
 	if (close(fd) < 0)

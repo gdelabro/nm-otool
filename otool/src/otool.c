@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:31:49 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/07 18:07:17 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 16:14:47 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		otool(char *ptr, char *name, t_option *o)
 {
 	unsigned int	magic;
 
-	(void)o;
+	check_address(ptr);
 	magic = *((unsigned int*)ptr);
 	if (magic == MH_MAGIC_64)
 		return (handle_64(ptr, name, o));

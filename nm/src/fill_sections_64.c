@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 18:43:25 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/06 17:13:05 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 15:39:06 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ void		fill_sections_64(t_nm_64 *s)
 	i = -1;
 	seg = (struct segment_command_64*)(s->lc);
 	sec = (void*)(seg + 1);
+	check_address(seg);
 	while (++i < seg->nsects)
 	{
+		check_address(sec);
 		s->sec = add_section(s, sec);
 		sec += 1;
 	}

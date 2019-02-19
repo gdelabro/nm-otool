@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 15:21:17 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/08 18:42:55 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 15:35:40 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	ft_exit(int err, char *msg)
 		ft_fd_printf(2, "%s: munmap failed: exiting\n", msg);
 	else if (err == 6)
 		ft_fd_printf(2, "%s: close failed: exiting\n", msg);
+	else if (err == 7)
+		ft_fd_printf(2, "file corrupted: exiting\n");
 	else
 		ft_fd_printf(2, "%s: error unkonwn: exiting\n", msg);
 	exit(EXIT_FAILURE);
@@ -53,7 +55,6 @@ void	nm_one_file(char *name, int aff_name)
 {
 	int				fd;
 	char			*ptr;
-	int				ret;
 	struct stat		buf;
 
 	if ((fd = open(name, O_RDONLY)) < 0)
@@ -65,7 +66,8 @@ void	nm_one_file(char *name, int aff_name)
 	if ((ptr = mmap(NULL, buf.st_size,
 					PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
 		ft_exit(3, "");
-	ret = nm(ptr, name, aff_name);
+	init_check_address(ptr, buf.st_size);
+	nm(ptr, name, aff_name);
 	if ((munmap(ptr, buf.st_size)))
 		ft_exit(5, "");
 	if (close(fd) < 0)

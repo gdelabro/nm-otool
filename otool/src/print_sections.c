@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 17:41:48 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/08 19:04:01 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/19 16:51:12 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	print_arch(t_arch *arch, char *ptr)
 
 void	print_archive_header(struct ar_hdr *h)
 {
-	ft_printf("%.7d %d/%d% 6d% 11d ",
+	ft_printf("%.7d %d/%-3d% 6d% 11d ",
 	ft_atoi(h->ar_mode), ft_atoi(h->ar_uid), ft_atoi(h->ar_gid),
 	ft_atoi(h->ar_size), ft_atoi(h->ar_date));
 	write(1, h->ar_name, ft_strchr(h->ar_name, ' ') - h->ar_name);
