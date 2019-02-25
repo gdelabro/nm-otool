@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 19:22:31 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/25 18:25:13 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int		handle_fat(char *ptr, char *name)
 	s->header = (struct fat_header *)ptr;
 	s->i = -1;
 	s->fat_arch = (struct fat_arch*)(s->header + 1);
-	check_address(s->fat_arch);
 	s->ptr = NULL;
 	while (++s->i < swap_uint32(s->header->nfat_arch))
 	{
 		check_address(s->fat_arch);
+		check_address(s->fat_arch + 1);
 		ptr2 = (void*)ptr + swap_uint32(s->fat_arch->offset);
 		check_address(ptr2);
 		if (ptr2->magic == MH_MAGIC_64

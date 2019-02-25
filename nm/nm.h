@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 14:53:45 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 18:59:42 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/25 15:59:31 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ void						init_check_address(void *ptr, int size);
 void						fill_sections_64(t_nm_64 *s);
 void						fill_sections_32(t_nm_32 *s);
 void						fill_sections_fat(t_nm_fat *s);
-void						print_symbols(t_nlist *sym, t_sections *sec);
+void						print_symbols(t_nlist *sym, t_sections *sec,
+	int mode);
 int							handle_64(char *ptr);
 int							handle_32(char *ptr);
 int							handle_fat(char *ptr, char *name);

@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 15:21:17 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 16:07:57 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/22 17:21:11 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	ft_exit(int err, char *msg)
 		ft_fd_printf(2, "%s: close failed: exiting\n", msg);
 	else if (err == 7)
 		ft_fd_printf(2,
-"exiting for bad option\nUsage: ./ft_otool [-fdht] -- <object files> ...\n");
+"exiting for bad option\nUsage: ./ft_otool [-fadht] -- <object files> ...\n");
 	else if (err == 8)
 		ft_fd_printf(2,
-"exiting: no object file\nUsage: ./ft_otool [-fdht] -- <object files> ...\n");
+"exiting: no object file\nUsage: ./ft_otool [-fadht] -- <object files> ...\n");
 	else if (err == 9)
 		ft_fd_printf(2, "file corrupted: exiting\n");
 	else

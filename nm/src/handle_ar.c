@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 15:47:22 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/22 17:42:37 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int			handle_ar(char *ptr, char *name)
 	!(s = malloc(sizeof(t_nm_ar))) ? ft_exit(1, "") : 0;
 	s->header = (struct ar_hdr *)(ptr + SARMAG);
 	check_address(s->header);
+	check_address(s->header + 1);
 	size = *(int*)((void*)(s->header + 1)
 			+ ft_atoi(ft_strchr(s->header->ar_name, '/') + 1));
 	size /= sizeof(s->ran);

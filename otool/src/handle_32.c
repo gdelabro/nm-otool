@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 15:56:56 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:28:00 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int		handle_32(char *ptr, char *name, t_option *o)
 	!(s = malloc(sizeof(t_nm_32))) ? ft_exit(1, "") : 0;
 	s->header = (struct mach_header *)ptr;
 	check_address(s->header);
+	check_address(s->header + 1);
 	s->lc = (void*)ptr + sizeof(struct mach_header);
 	s->ncmds = s->header->ncmds;
 	s->i = -1;

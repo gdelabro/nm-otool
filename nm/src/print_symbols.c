@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 17:41:48 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 20:06:05 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:02:16 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,22 @@ char	define_type(t_nlist *sym, t_sections *sec)
 	return (ret);
 }
 
-void	print_symbols(t_nlist *sym, t_sections *sec)
+void	print_symbols(t_nlist *sym, t_sections *sec, int mode)
 {
 	t_nlist		*tmp;
 
 	tmp = sym;
 	while (tmp)
 	{
-		(tmp->n_type & N_TYPE) != N_UNDF ?
-			ft_printf("%.16llx %c %s\n", tmp->n_value,
+		if ((tmp->n_type & N_TYPE) != N_UNDF)
+			mode ? ft_printf("%.16llx %c %s\n", tmp->n_value,
 				define_type(tmp, sec), tmp->n_name) :
-			ft_printf("% 16s %c %s\n", "",
+			ft_printf("%.8llx %c %s\n", tmp->n_value,
+				define_type(tmp, sec), tmp->n_name);
+		else
+			mode ? ft_printf("% 16s %c %s\n", "",
+					define_type(tmp, sec), tmp->n_name) :
+				ft_printf("% 8s %c %s\n", "",
 					define_type(tmp, sec), tmp->n_name);
 		tmp = tmp->next;
 	}

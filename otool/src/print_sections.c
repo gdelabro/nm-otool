@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 17:41:48 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 18:42:10 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:18:53 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	print_arch(t_arch *arch, char *ptr)
 
 void	print_archive_header(struct ar_hdr *h)
 {
+	check_address(h);
+	check_address(h + 1);
 	ft_printf("%.7d %d/%-3d% 6d% 11d ",
 	ft_atoi(h->ar_mode), ft_atoi(h->ar_uid), ft_atoi(h->ar_gid),
 	ft_atoi(h->ar_size), ft_atoi(h->ar_date));
@@ -40,6 +42,8 @@ void	print_section_data(char *ptr, uint32_t size, void *addr, int mode)
 	int		i;
 
 	i = -1;
+	check_address(ptr);
+	check_address(ptr + size);
 	ft_printf("Contents of (__DATA,__data) section\n");
 	while (++i < (int)size)
 	{
@@ -56,6 +60,8 @@ void	print_sections(char *ptr, uint32_t size, void *addr, int mode)
 	int		i;
 
 	i = -1;
+	check_address(ptr);
+	check_address(ptr + size);
 	ft_printf("Contents of (__TEXT,__text) section\n");
 	while (++i < (int)size)
 	{

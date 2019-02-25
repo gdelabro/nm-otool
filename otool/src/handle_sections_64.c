@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 18:43:25 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 18:33:21 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/25 16:09:31 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	handle_sections_64(t_nm_64 *s, char *ptr, t_option *o)
 	while (++i < (int)seg->nsects)
 	{
 		check_address(sec);
+		check_address(sec + 1);
 		if (!ft_strcmp(sec->segname, SEG_TEXT)
 				&& !ft_strcmp(sec->sectname, SECT_TEXT) && o->t)
 			print_sections(ptr + sec->offset, sec->size,
