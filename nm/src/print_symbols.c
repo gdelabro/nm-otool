@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 17:41:48 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/27 18:14:11 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/28 16:14:31 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	define_type(t_nlist *sym, t_sections *sec)
 	return (ret);
 }
 
-void 	aff_sym_name(char *str)
+void	aff_sym_name(char *str)
 {
 	int i;
 
