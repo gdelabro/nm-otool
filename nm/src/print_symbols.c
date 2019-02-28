@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 17:41:48 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/25 16:02:16 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/27 18:14:11 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,17 @@ char	define_type(t_nlist *sym, t_sections *sec)
 	return (ret);
 }
 
+void 	aff_sym_name(char *str)
+{
+	int i;
+
+	i = -1;
+	while (is_in_address(str + ++i) && str[i])
+		;
+	write(1, str, i);
+	ft_putendl("");
+}
+
 void	print_symbols(t_nlist *sym, t_sections *sec, int mode)
 {
 	t_nlist		*tmp;
@@ -61,15 +72,16 @@ void	print_symbols(t_nlist *sym, t_sections *sec, int mode)
 	while (tmp)
 	{
 		if ((tmp->n_type & N_TYPE) != N_UNDF)
-			mode ? ft_printf("%.16llx %c %s\n", tmp->n_value,
-				define_type(tmp, sec), tmp->n_name) :
-			ft_printf("%.8llx %c %s\n", tmp->n_value,
-				define_type(tmp, sec), tmp->n_name);
+			mode ? ft_printf("%.16llx %c ", tmp->n_value,
+				define_type(tmp, sec)) :
+			ft_printf("%.8llx %c ", tmp->n_value,
+				define_type(tmp, sec));
 		else
-			mode ? ft_printf("% 16s %c %s\n", "",
-					define_type(tmp, sec), tmp->n_name) :
-				ft_printf("% 8s %c %s\n", "",
-					define_type(tmp, sec), tmp->n_name);
+			mode ? ft_printf("% 16s %c ", "",
+					define_type(tmp, sec)) :
+				ft_printf("% 8s %c ", "",
+					define_type(tmp, sec));
+		aff_sym_name(tmp->n_name);
 		tmp = tmp->next;
 	}
 }
