@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 15:21:17 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/22 17:21:11 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/03/04 14:51:09 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ void	ft_abort_file(int err, char *msg)
 	else if (err == 4)
 		ft_fd_printf(2, "%s: fstat failed\n", msg);
 	else if (err == 5)
-		ft_fd_printf(2, "exit: munmap failed\n");
+		ft_fd_printf(2, "aborting: munmap failed\n");
 	else if (err == 6)
-		ft_fd_printf(2, "exit: close failed\n");
+		ft_fd_printf(2, "aborting: close failed\n");
 	else if (err == 7)
-		ft_fd_printf(2, "exit: %s is not a regular file\n", msg);
+		ft_fd_printf(2, "aborting: %s is not a regular file\n", msg);
+	else if (err == 8)
+		ft_fd_printf(2, "aborting: %s bad file size\n", msg);
 	else
-		ft_fd_printf(2, "exit: error unkonwn\n");
+		ft_fd_printf(2, "aborting: error unkonwn\n");
 }
 
 void	ft_exit(int err, char *msg)
@@ -69,6 +71,8 @@ void	otool_one_file(char *name, t_option *o)
 		return (ft_abort_file(4, name));
 	if (S_ISDIR(buf.st_mode) && close(fd) != -11)
 		return (ft_abort_file(7, name));
+	if (buf.st_size <= 0 && close(fd) != -11)
+		return (ft_abort_file(8, name));
 	if ((ptr = mmap(NULL, buf.st_size,
 					PROT_READ, MAP_PRIVATE, fd, 0)) == MAP_FAILED)
 		ft_exit(3, name);

@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/26 19:31:54 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/28 18:35:23 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int		handle_fat(char *ptr, char *name)
 	s->ptr = NULL;
 	while (++s->i < swap_uint32(s->header->nfat_arch))
 	{
-		check_address(s->fat_arch);
 		check_address(s->fat_arch + 1);
 		ptr2 = (void*)ptr + swap_uint32(s->fat_arch->offset);
 		check_address(ptr2);
@@ -36,7 +35,7 @@ int		handle_fat(char *ptr, char *name)
 	s->i == swap_uint32(s->header->nfat_arch) ? s->fat_arch -= 1 : 0;
 	check_address(ptr + swap_uint32(s->fat_arch->offset));
 	!swap_uint32(s->fat_arch->offset) ? check_address(NULL) : 0;
-	nm(s->ptr, name, 0);
+	nm(s->ptr, name, 2);
 	free(s);
 	return (1);
 }

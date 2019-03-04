@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:32:46 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/25 16:01:23 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/03/04 14:53:31 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_nlist		*creat_new_sym_32(struct nlist el, char *str)
 	new_sym->n_type = el.n_type;
 	new_sym->n_sect = el.n_sect;
 	new_sym->n_value = el.n_value;
+	((new_sym->n_type & N_TYPE) == N_UNDF) ? new_sym->n_value = 0 : 0;
 	new_sym->n_name = str;
 	new_sym->next = NULL;
 	return (new_sym);
@@ -35,16 +36,14 @@ t_nlist		*add_symbols_32(t_nlist *sym, struct nlist el, char *str)
 
 	new_sym = creat_new_sym_32(el, str);
 	curr_sym = sym;
-	if (!sym || (ft_strcmp(str, sym->n_name) < 0
-				&& (new_sym->next = sym) != (void*)-1))
+	if (!sym || ((ft_strcmp(str, sym->n_name) < 0
+		|| (!ft_strcmp(str, sym->n_name) && el.n_value < sym->n_value))
+			&& (new_sym->next = sym) != (void*)-1))
 		return (new_sym);
 	while (curr_sym)
 	{
-		if (!curr_sym->next)
-		{
-			curr_sym->next = new_sym;
+		if (!curr_sym->next && (curr_sym->next = new_sym))
 			return (sym);
-		}
 		if (ft_strcmp(str, curr_sym->next->n_name) < 0 || (!ft_strcmp(str,
 			curr_sym->next->n_name) && el.n_value < curr_sym->next->n_value))
 		{

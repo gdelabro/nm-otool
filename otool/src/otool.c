@@ -6,7 +6,7 @@
 /*   By: gdelabro <gdelabro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 15:31:49 by gdelabro          #+#    #+#             */
-/*   Updated: 2019/02/19 16:14:47 by gdelabro         ###   ########.fr       */
+/*   Updated: 2019/02/28 18:43:20 by gdelabro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		otool(char *ptr, char *name, t_option *o)
 		return (handle_fat(ptr, name, o));
 	else if (!ft_strncmp(ptr, ARMAG, SARMAG))
 		return (handle_ar(ptr, name, o));
-	ft_printf("ft_otool: file %s was not recognized as a valid object file\n",
-			name);
+	ft_printf("%s: is not an object file\n", name);
 	return (0);
 }
